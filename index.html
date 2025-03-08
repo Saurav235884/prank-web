@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Good Work</title>
+        <style>
+        body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f4f4f9;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          flex-direction: column;
+          transition: background-color 0.5s ease;
+        }
+    
+        #label {
+          font-size: 26px;
+          font-weight: bold;
+          margin-bottom: 30px;
+          color: #333;
+          transition: transform 0.3s ease;
+        }
+    
+        .button-container {
+          display: flex;
+          gap: 20px;
+        }
+    
+        button {
+          padding: 15px 30px;
+          font-size: 20px;
+          cursor: pointer;
+          border: none;
+          border-radius: 8px;
+          outline: none;
+          background-color: #4CAF50;
+          color: white;
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+        }
+    
+        button:hover {
+          background-color: #45a049;
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+          transform: scale(1.1);
+        }
+    
+        button:active {
+          transform: scale(1);
+          box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        #noButton {
+          position: relative;
+          background-color: #f44336;
+        }
+    
+        #noButton:hover {
+          background-color: #e53935;
+        }
+    
+        /* Add glowing effect on hover */
+        .glow-on-hover {
+          position: relative;
+          overflow: hidden;
+          border: none;
+          border-radius: 50px;
+          background-color: #fff;
+          color: #333;
+          font-size: 20px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.4s ease;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+    
+        .glow-on-hover:before {
+          content: "";
+          background: linear-gradient(45deg, #ff4b2b, #ff416c);
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 300%;
+          height: 300%;
+          border-radius: 50%;
+          transition: all 0.4s ease;
+          transform: translate(-50%, -50%) scale(0);
+          z-index: 0;
+        }
+    
+        .glow-on-hover:hover:before {
+          transform: translate(-50%, -50%) scale(1);
+        }
+    
+        .glow-on-hover:hover {
+          color: #fff;
+          box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+        }
+        @media (max-width: 768px) {
+          button {
+            font-size: 16px;
+            padding: 12px 25px;
+          }
+
+          #label {
+            font-size: 22px;
+          }
+        }
+    
+      </style>
+    </head>
+    <body>
+
+        <div id="label">Kya aapko Momos pasand hai?</div>
+
+        <div class="button-container">
+            <button id="yesButton">No</button>
+            <button id="noButton">Yes</button>
+        </div>
+
+        <script>
+        let noButtonMoved = false; 
+  
+        // Yes button click
+        document.getElementById('yesButton').addEventListener('click', function() {
+          // Hide label and buttons
+          document.getElementById('label').style.display = 'none';
+          document.getElementById('yesButton').style.display = 'none';
+          document.getElementById('noButton').style.display = 'none';
+          
+          // Show Thank You message
+          let thankYouMessage = document.createElement('div');
+          thankYouMessage.textContent = "Thank You! so much😂";
+          thankYouMessage.style.fontSize = '30px';
+          thankYouMessage.style.fontWeight = 'bold';
+          thankYouMessage.style.color = '#4CAF50';
+          thankYouMessage.style.marginTop = '20px';
+          document.body.appendChild(thankYouMessage);
+        });
+  
+        const noButton = document.getElementById('noButton');
+  
+        noButton.addEventListener('mouseover', function() {
+          moveNoButton();
+        });
+  
+        // Mobile compatibility: touchstart for mobile devices
+        noButton.addEventListener('touchstart', function() {
+          moveNoButton();
+        });
+  
+        // Function to move the No button to a new random position
+        function moveNoButton() {
+          noButton.style.pointerEvents = 'none'; // Disable click while moving
+          const randomX = Math.floor(Math.random() * 400) - 150; 
+          const randomY = Math.floor(Math.random() * 400) - 150;
+          noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+          noButtonMoved = true;
+  
+          // Re-enable pointer events after some time (once moved)
+          setTimeout(function() {
+            noButton.style.pointerEvents = 'auto'; // Enable click again
+          }, 500);  // After 500ms delay
+        }
+  
+        // Disable No button if it gets clicked (for both desktop and mobile)
+        noButton.addEventListener('mousedown', function() {
+          hideAndResetNoButton();
+        });
+  
+        // Mobile touch support for "click"
+        noButton.addEventListener('touchstart', function() {
+          hideAndResetNoButton();
+        });
+  
+        // Hide and reset No button after 1 second
+        function hideAndResetNoButton() {
+          noButton.style.display = 'none'; // Hide the button
+          setTimeout(function() {
+            noButton.style.display = 'inline-block'; // Show it again
+            moveNoButton(); // Move the button again
+          }, 1000);  // 1 second delay before showing again
+        }
+  
+      </script>
+
+    </body>
+</html>
